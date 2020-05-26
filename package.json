@@ -26,6 +26,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "docx": "^5.0.2"
+    "docx": "^5.0.2",
+    "file-saver": "^2.0.2"
   }
 }

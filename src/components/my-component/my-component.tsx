@@ -1,6 +1,7 @@
 import { Component, Prop, h } from '@stencil/core';
 import { format } from '../../utils/utils';
-import * as docxNs from "docx";
+import * as docxNs from 'docx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   tag: 'my-component',
@@ -28,6 +29,13 @@ export class MyComponent {
   }
 
   render() {
+    return <div>
+      Hello, World! I'm {this.getText()}
+      <button onClick={() => this.buildDocx()}>Docx</button>
+    </div>;
+  }
+
+  private buildDocx() {
     const docx = docxNs['default'];
     const doc = new docx.Document();
     doc.addSection({
@@ -48,10 +56,8 @@ export class MyComponent {
         }),
       ],
     });
-    docx.Packer.toBuffer(doc).then((buffer) => {
-      console.log(buffer);
+    docx.Packer.toBlob(doc).then((blob) => {
+      FileSaver['default'].saveAs(blob, "example.docx");
     })
-
-    return <div>Hello, World! I'm {this.getText()}</div>;
   }
 }
